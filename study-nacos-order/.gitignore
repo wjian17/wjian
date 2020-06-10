@@ -1,5 +1,5 @@
 HELP.md
-**/target/
+target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
@@ -15,12 +15,9 @@ HELP.md
 
 ### IntelliJ IDEA ###
 .idea
-*.mvn
 *.iws
 *.iml
 *.ipr
-mvnw.cmd
-mvnw
 
 ### NetBeans ###
 /nbproject/private/
