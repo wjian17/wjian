@@ -1,10 +1,10 @@
-package com.wjian.study.study.nacosorder.controller;
+package com.wjian.study.nacosconsumer.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.wjian.study.domain.basic.BasicResponse;
 import com.wjian.study.domain.enums.BasicErrorCode;
 import com.wjian.study.domain.rest.EpAlipayBillFlow;
-import com.wjian.study.study.nacosorder.service.EpAlipayBillFlowServer;
+import com.wjian.study.nacosconsumer.service.EpAlipayBillFlowServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ import java.util.List;
  */
  public class EpAlipayBillFlowController {
 
-    private static Logger logger = LoggerFactory.getLogger(EpAlipayBillFlowController.class);
+    private Logger logger  = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private EpAlipayBillFlowServer epAlipayBillFlowServer;

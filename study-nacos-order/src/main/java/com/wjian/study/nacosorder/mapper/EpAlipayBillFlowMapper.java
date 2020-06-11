@@ -1,22 +1,24 @@
-package com.wjian.study.study.nacosorder.mapper;
+package com.wjian.study.nacosorder.mapper;
 
-
-import org.apache.ibatis.annotations.Mapper;
+import com.wjian.study.domain.rest.EpAlipayBillFlow;
 import org.apache.ibatis.annotations.Param;
-import org.company.forward.domain.rest.EpAlipayBillFlow;
+import org.mapstruct.Mapper;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * @author wangjian
+ * @date 2020/5/28 0028 16:06
+ */
 @Mapper
-@Repository
 public interface EpAlipayBillFlowMapper {
 
     int insert(EpAlipayBillFlow record);
 
     int insertSelective(EpAlipayBillFlow record);
 
-    @Cacheable(cacheNames = "mybatis")
+//    @Cacheable(cacheNames = "mybatis")
     List<EpAlipayBillFlow> queryEpAlipayBillFlowList(@Param("flowNo") String flowNo);
 }

@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: study-eureka
+  http:
+    encoding: { charset: UTF-8, enable: true, force: true }
+#/actuator/info
+info:
+  component: ${spring.application.name}
+  contact:
+    email: 1274374508@qq.com
+    phone: 18810078492
