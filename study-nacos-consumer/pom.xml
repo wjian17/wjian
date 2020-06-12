@@ -7,7 +7,7 @@
         <groupId>com.wjian.study</groupId>
         <artifactId>study-wjian</artifactId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath/> <!-- lookup parent from repository -->
+<!--        <relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -27,22 +27,34 @@
             <scope>compile</scope>
         </dependency>
 
-        <!--&lt;!&ndash;nacos-config&ndash;&gt;
+        <!--openfeign-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
+        <!--nacos-config-->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
-        &lt;!&ndash;nacos-discovery&ndash;&gt;
+        <!--nacos-discovery-->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        </dependency>-->
+        </dependency>
 
-        <!-- SpringBoot整合zookeeper客户端 -->
+        <!-- springcloud整合consul-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.cloud</groupId>-->
+<!--            <artifactId>spring-cloud-starter-consul-discovery</artifactId>-->
+<!--        </dependency>-->
+
+        <!--&lt;!&ndash; SpringBoot整合zookeeper客户端 &ndash;&gt;
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-zookeeper-discovery</artifactId>
-            <!--先排除自带的zookeeper-->
+            &lt;!&ndash;先排除自带的zookeeper&ndash;&gt;
             <exclusions>
                 <exclusion>
                     <groupId>org.apache.zookeeper</groupId>
@@ -50,7 +62,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!--添加zookeeper3.4.9版本-->
+        &lt;!&ndash;添加zookeeper3.4.9版本&ndash;&gt;
         <dependency>
             <groupId>org.apache.zookeeper</groupId>
             <artifactId>zookeeper</artifactId>
@@ -61,7 +73,7 @@
                     <groupId>org.slf4j</groupId>
                 </exclusion>
             </exclusions>
-        </dependency>
+        </dependency>-->
 
 
         <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->

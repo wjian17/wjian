@@ -1,6 +1,14 @@
 spring:
+  cloud:
+    nacos:
+      #nacos配置中心  必须配置在bootstrap中
+      config:
+        server-addr: localhost:8848 #Nacos作为配置中心地址
+        file-extension: yaml #指定yaml格式的配置
+        group: DEV_GROUP
+        namespace: f0a83d7c-f836-4257-9802-1531706fb610
   application:
-    name: study-nacos-order
+    name: study-nacos-consumer
   http:
     encoding: { charset: UTF-8, enable: true, force: true }
 #/actuator/info

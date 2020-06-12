@@ -25,19 +25,28 @@ spring:
   application:
     name: study-nacos-order
   cloud:
+    #注册consul地址
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      discovery:
+        register: true
+        hostname: ${spring.cloud.client.ip-address}
+        serviceName: ${spring.application.name}
+        healthCheckPath: /actuator/health
+        healthCheckInterval: 15s
+        tags: urlprefix-/${spring.application.name}
+        instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
     #注册到zookeeper地址
     zookeeper:
       connect-string: 192.168.199.130:2181,192.168.199.130:2182,192.168.199.130:2183
+    #注册nacos地址
     nacos:
       #nacos注册中心
       discovery:
         server-addr: localhost:8848
-      #nacos配置中心
-      config:
-        server-addr: localhost:8848 #Nacos作为配置中心地址
-        file-extension: yaml #指定yaml格式的配置
         group: DEV_GROUP
-        namespace: 7d8f0f5a-6a53-4785-9686-dd460158e5d4
+        namespace: f0a83d7c-f836-4257-9802-1531706fb610
   log-home: /study-log/logs/${spring.application.name}
 #  security:
 #    user:
@@ -93,3 +102,7 @@ mybatis:
   type-aliases-package: com.wjian.study.domain.*
   mapperLocations: classpath*:mapper/**.xml
   config-location: classpath:mybatis-config.xml
+
+
+config:
+  info: test-${spring.application.name}
