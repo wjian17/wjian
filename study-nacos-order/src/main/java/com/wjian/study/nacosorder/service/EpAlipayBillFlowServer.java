@@ -12,4 +12,6 @@ import java.util.List;
 public interface EpAlipayBillFlowServer {
 
     public List<EpAlipayBillFlow> queryEpAlipayBillFlowList(String flowNo);
+
+    public String circuitBreaker(Integer id);
 }

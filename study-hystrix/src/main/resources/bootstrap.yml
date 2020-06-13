@@ -11,7 +11,7 @@ spring:
         group: DEV_GROUP
         namespace: f0a83d7c-f836-4257-9802-1531706fb610
   application:
-    name: study-nacos-consumer
+    name: study-hystrix
   http:
     encoding: { charset: UTF-8, enable: true, force: true }
 #/actuator/info

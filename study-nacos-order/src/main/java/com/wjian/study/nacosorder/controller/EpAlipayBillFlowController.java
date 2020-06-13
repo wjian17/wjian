@@ -48,4 +48,15 @@ import java.util.List;
         logger.info("/test/flowNo发起请求，请求参数：{},请求结果：{}",flowNo, JSON.toJSONString(epAlipayBillFlowList));
         return basicResponse;
     }
+
+    @RequestMapping(value = "/circuitBreaker/{id}",method = RequestMethod.GET)
+    public BasicResponse circuitBreaker(@PathVariable Integer id){
+        BasicResponse basicResponse = new BasicResponse();
+        basicResponse.setErrorCode(BasicErrorCode.SERVICE_SUCCESS_CODE);
+        basicResponse.setErrorMsg(BasicErrorCode.SERVICE_SUCCESS_MSG);
+        String back = epAlipayBillFlowServer.circuitBreaker(id);
+        basicResponse.setBody(back);
+        logger.info("/test/flowNo发起请求，请求参数：{},请求结果：{}",id, JSON.toJSONString(back));
+        return basicResponse;
+    }
 }

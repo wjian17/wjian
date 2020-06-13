@@ -1,6 +1,11 @@
-package com.wjian.study.nacosconsumer.feign;
+package com.wjian.study.hystrix.feign;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import com.wjian.study.domain.basic.BasicResponse;
+import com.wjian.study.hystrix.hystrix.HystrixEpAlipayBillFlowServer;
+import com.wjian.study.hystrix.hystrix.HystrixWithCauseEpAlipayBillFlowServer;
+import io.swagger.models.auth.In;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,15 +21,13 @@ import javax.annotation.Generated;
  * @date 2020/6/12 0012 9:46
  */
 @Component
-@FeignClient(value = "study-nacos-order")
+@FeignClient(value = "study-nacos-order",fallback = HystrixEpAlipayBillFlowServer.class)
+//@FeignClient(value = "study-nacos-order",fallbackFactory = HystrixWithCauseEpAlipayBillFlowServer.class)
 public interface EpAlipayBillFlowServer {
 
     @GetMapping(value = "/EpAlipayBillFlow/{flowNo}")
     BasicResponse epAlipayBillFlow(@PathVariable(value = "flowNo") String flowNo);
 
-    @RequestMapping(value = "/test/{flowNo}",method = RequestMethod.GET)
-    BasicResponse test(@PathVariable("flowNo") String flowNo);
-
-    @RequestMapping(value = "/circuitBreaker/{id}",method = RequestMethod.GET)
-    BasicResponse circuitBreaker(@PathVariable("id") Integer id);
+    @GetMapping(value = "/circuitBreaker/{id}")
+    BasicResponse circuitBreaker(@PathVariable(value = "id") Integer id);
 }

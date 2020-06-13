@@ -1,7 +1,9 @@
-package com.wjian.study.nacosconsumer.controller;
+package com.wjian.study.hystrix.controller;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import com.wjian.study.domain.basic.BasicResponse;
-import com.wjian.study.nacosconsumer.feign.EpAlipayBillFlowServer;
+import com.wjian.study.hystrix.feign.EpAlipayBillFlowServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +28,23 @@ import org.springframework.web.bind.annotation.*;
     private EpAlipayBillFlowServer epAlipayBillFlowServer;
 
     @RequestMapping(value = "/EpAlipayBillFlow/{flowNo}",method = RequestMethod.GET)
+    //=====服务熔断
+    @HystrixCommand(fallbackMethod = "epAlipayBillFlow_circuitBreaker",commandProperties = {
+            @HystrixProperty(name = "circuitBreaker.enabled",value = "true"),// 是否开启断路器
+            @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold",value = "10"),// 请求次数
+            @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds",value = "10000"), // 时间窗口期
+            @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage",value = "60"),// 失败率达到多少后跳闸
+    })
     public BasicResponse epAlipayBillFlow(@PathVariable String flowNo){
         logger.info("/EpAlipayBillFlow/flowNo发起请求，请求参数：{}----{}",flowNo,configInfo);
         return epAlipayBillFlowServer.epAlipayBillFlow(flowNo);
+    }
+
+    public BasicResponse epAlipayBillFlow_circuitBreaker(String flowNo){
+        logger.info("服务时间窗口期中，请求次数达规定次数，切阀值失败率达到预定制：{}----{}",flowNo,configInfo);
+        logger.info("服务时间窗口期中，请求次数达规定次数，切阀值失败率达到预定制：{}----{}",flowNo,configInfo);
+        logger.info("服务时间窗口期中，请求次数达规定次数，切阀值失败率达到预定制：{}----{}",flowNo,configInfo);
+        return new BasicResponse();
     }
 
     @RequestMapping(value = "/test/{flowNo}",method = RequestMethod.GET)

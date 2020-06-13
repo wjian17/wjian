@@ -1,4 +1,4 @@
-package com.wjian.study.nacosconsumer;
+package com.wjian.study.hystrix;
 
 import com.netflix.hystrix.contrib.metrics.eventstream.HystrixMetricsStreamServlet;
 import com.wjian.study.rule.LoadBalanceConfig;
@@ -8,7 +8,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
@@ -24,16 +23,17 @@ import org.springframework.context.annotation.Bean;
 //pom导入切换 nacos,zookeeper,consule
 @EnableDiscoveryClient
 @SpringBootApplication
-@MapperScan(basePackages = "com.wjian.study.nacosconsumer.mapper")
+@MapperScan(basePackages = "com.wjian.study.hystrix.mapper")
 //指定访问策略 - 对单一服务，扫描的类在scan之外，否则全局生效
 @RibbonClient(name = "study-nacos-order",configuration = LoadBalanceConfig.class)
 @EnableFeignClients
 @EnableCircuitBreaker
+//http://localhost:8765/hystrix
 @EnableHystrixDashboard
-public class StudyNacosconsumerApplication {
+public class StudyHystrixApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(StudyNacosconsumerApplication.class, args);
+        SpringApplication.run(StudyHystrixApplication.class, args);
     }
 
     /**
