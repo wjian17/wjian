@@ -15,6 +15,11 @@
         <module>study-eureka</module>
         <module>study-nacos-consumer</module>
         <module>study-hystrix</module>
+        <module>study-hystrix-dashboard</module>
+        <module>study-gateway</module>
+        <module>study-config</module>
+        <module>study-config-order</module>
+        <module>study-sleuth-zkpin</module>
     </modules>
 
     <properties>

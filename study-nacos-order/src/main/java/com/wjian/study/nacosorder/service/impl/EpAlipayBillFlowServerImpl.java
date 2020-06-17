@@ -69,6 +69,11 @@ public class EpAlipayBillFlowServerImpl implements EpAlipayBillFlowServer {
             @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "60"),// 失败率达到多少后跳闸
     })
     public String circuitBreaker(@PathVariable("id") Integer id) {
+        try {
+            Thread.sleep(Math.abs(id)*1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         if (id < 0) {
             throw new RuntimeException("******id 不能负数");
         }

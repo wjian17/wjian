@@ -1,4 +1,5 @@
 @EnableCircuitBreaker  服务端开
+@EnableHystrix
 
 服务降级：
 callback
@@ -29,6 +30,13 @@ eg1:
 
 
 eg2:
+第二种方式需要配置开启熔断
+@EnableHystrix
+
+feign:
+  hystrix:
+    enabled: true
+
     不带失败casuse状态fallback
     @FeignClient(value = "CLOUD-PROVIDER-HYSTRIX-PAYMENT" ,fallback = HystrixStudyFeignServerClientFallbackFactory.class)
     feign加注解

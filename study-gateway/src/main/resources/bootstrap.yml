@@ -1,0 +1,22 @@
+spring:
+  cloud:
+    nacos:
+#      这是由spring boot的加载属性文件的优先级决定的，想要在加载属性之前去config server上取配置文件，
+#      那NacosConfig或SpringCloudConfig相关配置就是需要最先加载的，而bootstrap.properties的加载是
+#      先于application.properties的，所以config client要配置config的相关配置就只能写到bootstrap.properties里了
+#      nacos配置中心  必须配置在bootstrap中
+      config:
+        server-addr: localhost:8848 #Nacos作为配置中心地址
+        file-extension: yaml #指定yaml格式的配置
+        group: DEV_GROUP
+        namespace: f0a83d7c-f836-4257-9802-1531706fb610
+  application:
+    name: study-gateway
+  http:
+    encoding: { charset: UTF-8, enable: true, force: true }
+#/actuator/info
+info:
+  component: ${spring.application.name}
+  contact:
+    email: 1274374508@qq.com
+    phone: 18810078492

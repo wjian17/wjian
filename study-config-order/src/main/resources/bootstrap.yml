@@ -1,0 +1,121 @@
+
+spring:
+  cloud:
+    sentinel:
+      transport:
+        dashboard: localhost:8080 #配置Sentinel dashboard地址
+        port: 8719
+      datasource:
+        ds1:
+          nacos:
+            server-addr: localhost:8848
+            dataId: cloudalibaba-sentinel-service
+            groupId: DEFAULT_GROUP
+            data-type: json
+            rule-type: flow
+    nacos:
+      #nacos配置中心  必须配置在bootstrap中
+      config:
+        server-addr: localhost:8848 #Nacos作为配置中心地址
+        file-extension: yaml #指定yaml格式的配置
+        group: DEV_GROUP
+        namespace: f0a83d7c-f836-4257-9802-1531706fb610
+    config:
+      label: master #分支名称
+      name: config #配置文件名称
+      profile: test #读取后缀名称   上述3个综合：master分支上config-dev.yml的配置文件被读取http://config-3344.com:3344/master/config-dev.yml
+      uri: http://localhost:8766 #配置中心地址k
+    bus:
+      enabled: true
+      trace:
+        enabled: true
+      refresh:
+        enabled: true
+      #rabbitmq:
+      #host: localhost
+      #port: 5672
+      #username: wangjian
+      #password: 123456
+    stream:
+      #      binders: # 在此处配置要绑定的rabbitmq的服务信息；
+      #        defaultRabbit: # 表示定义的名称，用于于binding整合
+      #          type: rabbit # 消息组件类型
+      #          environment: # 设置rabbitmq的相关的环境配置
+      #            spring:
+      #              rabbitmq:
+      #                host: localhost
+      #                port: 5672
+      #                username: guest
+      #                password: guest
+      #        bindings: # 服务的整合处理
+      #          output: # 这个名字是一个通道的名称
+      #            destination: studyExchange # 表示要使用的Exchange名称定义
+      #            content-type: application/json # 设置消息类型，本次为json，文本则设置“text/plain”
+      #            binder: defaultRabbit # 设置要绑定的消息服务的具体设置
+      #配置自己定义的通道与哪个中间件交互
+      input: #channel里Input和Output的值
+        destination: topict1    #消息接收目標
+        group: group #組名
+        consumer:
+          partitioned: true   #开启分区
+          enableAutoCommit: false
+      output:
+        destination: topict1    #消息发往的目的地
+        content-type: text/plain    #消息发送的格式，接收端不用指定格式，但是发送端要
+        producer:
+          enable.idempotence: true
+          retries: 3
+          transactional.id: lest1t
+          transaction:
+            transaction-id-prefix: first-transactional1111
+          partitionKeyExpression: payload.id   #分区的主键，根据什么来分区，下面的payload.id只是一个对象的id用于做为Key，用来说明的。希望不要误解
+          partitionCount: 2    #Key和分区数量进行取模去分配消息，这里分区数量配置为2
+      #      kafka:
+      #        binder:
+      #          brokers: 192.168.199.130:9092,192.168.199.130:9093,192.168.199.130:9094  # kafka服务地址和端口
+      #          autoCreateTopics: true
+      #          autoAddPartitions: true
+      #          requiredAcks: all
+      #          zk-nodes: 192.168.199.130:2181,192.168.199.130:2182,192.168.199.130:2183  # ZK的集群配置地址和端口
+      #          transaction:
+      #            transaction-id-prefix: first-transactional
+      #          producer-properties:
+      #            retries: 3
+      kafka:
+        binder:
+          brokers:
+            - 192.168.199.130:9092
+            - 192.168.199.130:9093
+            - 192.168.199.130:9094
+          autoCreateTopics: true
+          autoAddPartitions: true
+          requiredAcks: all
+          zk-nodes: 192.168.199.130:2181,192.168.199.130:2182,192.168.199.130:2183  # ZK的集群配置地址和端口
+          transaction:
+            transaction-id-prefix: first-transactional
+          producer-properties:
+            retries: 3
+#  profiles:
+#    active: dev
+  application:
+    name: study-config-order
+  http:
+    encoding: { charset: UTF-8, enable: true, force: true }
+#/actuator/info
+info:
+  component: ${spring.application.name}
+  contact:
+    email: 1274374508@qq.com
+    phone: 18810078492
+
+
+# 暴露监控端点
+management:
+  endpoints:
+    web:
+#      base-path: / #默认是/actuator 前缀，可以在这里修改
+      exposure:
+        include: "*"  #打开全部请求端点
+server:
+  port: 8769
+#        include: refresh,health,info #打开部分

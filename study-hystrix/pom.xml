@@ -38,12 +38,6 @@
             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
         </dependency>
 
-<!--        &lt;!&ndash;gateway&ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-starter-gateway</artifactId>-->
-<!--        </dependency>-->
-
         <!-- 注意同步导入 actuator -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

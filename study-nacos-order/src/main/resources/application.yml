@@ -14,7 +14,7 @@ eureka:
   server:
     enableSelfPreservation: true
   client:
-    #defaultZone: http://${eureka.instance.hostname}:8761/eureka/
+    defaultZone: http://${eureka.instance.hostname}:8761/eureka/
 #    defaultZone: http://study-eureka:8761/eureka/
     # 是否从其他的服务中心同步服务列表
     fetch-registry: true
