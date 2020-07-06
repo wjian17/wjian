@@ -20,6 +20,11 @@
         <module>study-config</module>
         <module>study-config-order</module>
         <module>study-sleuth-zkpin</module>
+        <module>study-elastricsearch</module>
+        <module>study-oauth2-server</module>
+        <module>study-util</module>
+        <module>study-oauth2-resources</module>
+        <module>study-schedule</module>
     </modules>
 
     <properties>
@@ -45,6 +50,19 @@
 
     <dependencyManagement>
         <dependencies>
+
+<!--
+            <dependency>
+                <groupId>org.apache.oltu.oauth2</groupId>
+                <artifactId>org.apache.oltu.oauth2.authzserver</artifactId>
+                <version>0.31</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.oltu.oauth2</groupId>
+                <artifactId>org.apache.oltu.oauth2.resourceserver</artifactId>
+                <version>0.31</version>
+            </dependency>
+-->
 
             <!--热部署，正式上线需要去掉热部署-->
             <dependency>

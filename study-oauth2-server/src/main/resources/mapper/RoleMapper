@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhongxia.dao.RolesMapper">
+    <select id="roles" resultType="com.wjian.study.oauth2server.domain.spring.Role">
+        SELECT * FROM user_roles where locked=0;
+    </select>
+
+    <select id="getRolesByUrl" resultType="com.wjian.study.oauth2server.domain.spring.Role">
+        SELECT rolename FROM user_roles r, user_permissions p, user_role_permission pr
+        where pr.role_id = r.id and permission_id = p.id
+        and url=#{url} and p.locked=0;
+    </select>
+
+
+
+    <!--查询所有角色 -->
+    <select id="findRolesAll" resultType="com.wjian.study.oauth2server.domain.spring.Role">
+        SELECT id, role,
+        describes,locked,create_time,modify_time,roles_type FROM user_roles;
+    </select>
+
+    <!-- 查询角色 -->
+    <select id="findRoles" resultType="com.wjian.study.oauth2server.domain.spring.Role">
+        SELECT id, rolename,
+        describes,locked,create_time,modify_time,roles_type FROM user_roles;
+    </select>
+
+    <insert id="addRole" parameterType="com.wjian.study.oauth2server.domain.spring.Role">
+        INSERT INTO
+        user_roles
+        (rolename,describes,locked,create_time,roles_type)
+        VALUES(#{roles.rolename},#{roles.describes},#{roles.locked},NOW(),#{roles.rolesType});
+    </insert>
+
+    <insert id="addRelations" parameterType="java.util.List">
+        REPLACE INTO user_role_permission(
+        `role_id`, `permission_id`,company_id
+        )
+        VALUES
+        <foreach collection="rolePermRelation" index="index" item="item"  separator="," >
+            (
+            #{roleId},#{item},1
+            )
+        </foreach>
+    </insert>
+
+    <update id="updateRoleByRoleId" parameterType="com.wjian.study.oauth2server.domain.spring.Role">
+        UPDATE user_roles
+        <set>
+            rolename = #{roles.rolename},
+            describes = #{roles.describes},
+            locked = #{roles.locked},
+            modify_time = NOW(),
+            roles_type = #{roles.rolesType}
+            <!-- <if test="productType.createTime == null">create_time = NOW()</if>
+                <if test="productType.createTime != null">modify_time = NOW()</if> -->
+        </set>
+        WHERE id = #{roleId} ;
+    </update>
+
+    <delete id="delRoleByRoleId">
+        DELETE FROM user_roles WHERE id = #{roleId};
+        <!-- DELETE FROM user_role_permission_init WHERE role_id = #{roleId}; -->
+    </delete>
+
+    <delete id="delRelations">
+        DELETE FROM user_role_permission WHERE role_id = #{roleId} and permission_id =#{deletePerID};
+    </delete>
+</mapper>

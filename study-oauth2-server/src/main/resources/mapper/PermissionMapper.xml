@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wjian.study.oauth2server.mapper.PermissionMapper">
+
+    <resultMap type="com.wjian.study.oauth2server.domain.spring.Permission" id="PermissionMap">
+        <id column="id" property="id"/>
+        <result column="url" property="url"/>
+        <collection property="roles" ofType="com.wjian.study.oauth2server.domain.spring.Role" column="id">
+            <id column="rid" property="id"/><!-- 这里的column对应的是下面查询的别名，而不是表字段名 -->
+            <result column="rolename" property="rolename"/><!-- property对应JavaBean中的属性名 -->
+        </collection>
+    </resultMap>
+
+    <select id="getAllPermission" resultMap="PermissionMap">
+        select p.* , r.id As rid,r.rolename from user_permissions p
+        	left join user_role_permission pr on p.`id`=pr.`permission_id`
+        	left join user_roles r on pr.`role_id`=r.`id`
+        	order by p.`id` desc
+    </select>
+    <select id="findPermissionsAll" resultType="com.wjian.study.oauth2server.domain.spring.Permission">
+		SELECT * FROM sys_permission
+	</select>
+    <insert id="addPermissions" parameterType="com.wjian.study.oauth2server.domain.spring.Permission">
+		INSERT INTO
+		user_permissions
+		(url,method,describes,locked,create_time,parent_id)
+		VALUES("","",#{permissions.describes},#{permissions.locked},NOW(),#{permissions.parentId});
+	</insert>
+
+    <update id="updatePermissionsById" parameterType="com.wjian.study.oauth2server.domain.spring.Permission">
+        UPDATE user_permissions
+        <set>
+            describes = #{permissions.describes},
+            locked = #{permissions.locked},
+            modify_time = NOW(),
+            parent_id = #{permissions.parentId}
+        </set>
+        WHERE id = #{permissionsId};
+    </update>
+
+    <delete id="delPermissionsById">
+		DELETE FROM user_permissions WHERE id = #{permissionsId};
+	</delete>
+
+
+</mapper>

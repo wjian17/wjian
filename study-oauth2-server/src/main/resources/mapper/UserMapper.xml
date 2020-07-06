@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wjian.study.oauth2server.mapper.UserMapper">
+
+    <resultMap id="UserMap" type="com.wjian.study.oauth2server.domain.spring.User">
+        <id column="id" property="id"/>
+        <result column="uuid" property="uuid"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="phone" property="phone"/>
+        <result column="email" property="email"/>
+        <result column="salt" property="salt"/>
+        <result column="company_id" property="companyId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+        <result column="locked" property="locked"/>
+        <collection property="roles" ofType="com.wjian.study.oauth2server.domain.spring.Role" column="id">
+            <id column="rid" property="id"/>
+            <result column="rolename" property="rolename"/>
+        </collection>
+    </resultMap>
+    <select id="loadUserByUsername" resultMap="UserMap">
+        SELECT r.id AS rid ,r.rolename ,u.* FROM user_roles r, user_User_role ur,user_User u WHERE ur.`role_id`=r.`id` AND u.id = ur.User_id AND username=#{username}
+    </select>
+    <select id="loadUserByPassword" resultMap="UserMap">
+        SELECT r.id AS rid ,r.rolename ,u.* FROM user_roles r, user_User_role ur,user_User u WHERE ur.`role_id`=r.`id` AND u.id = ur.User_id AND password=#{password}
+    </select>
+    <update id="updatePassword" >
+        UPDATE `user_User` ua SET ua.`password` = #{newpassword} WHERE ua.`username` = #{username}
+    </update>
+    <update id="resetPassword" >
+        UPDATE `user_User` ua SET ua.`password` = #{resetPassword} WHERE ua.`username` = #{username}
+    </update>
+
+
+</mapper>
